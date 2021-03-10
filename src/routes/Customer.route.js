@@ -8,6 +8,7 @@ import Profile from "../pages/Profile";
 import Board from "../pages/Board";
 import Boardwrite from "../pages/Boardwrite";
 import Boardview from "../components/BoardView";
+import BoardUpdate from "../components/BoardUpdate";
 
 const Customer = () => {
   return (
@@ -21,6 +22,7 @@ const Customer = () => {
         <Route exact path="/board" component={Board} />
         <Route exact path="/boardwrite" component={Boardwrite} />
         <Route exact path="/board/:id" component={Boardview} />
+        <Route exact path="/boardupdate/:id" component={BoardUpdate} />
       </Switch>
     </div>
   );

@@ -10,6 +10,14 @@ export const BOARD_LIST_REQUEST = "BOARD_LIST_REQUEST";
 export const BOARD_LIST_SUCCESS = "BOARD_LIST_SUCCESS";
 export const BOARD_LIST_FAILURE = "BOARD_LIST_FAILURE";
 
+export const BOARD_REMOVE_REQUEST = "BOARD_REMOVE_REQUEST";
+export const BOARD_REMOVE_SUCCESS = "BOARD_REMOVE_SUCCESS";
+export const BOARD_REMOVE_FAILURE = "BOARD_REMOVE_FAILURE";
+
+export const BOARD_UPDATE_REQUEST = "BOARD_UPDATE_REQUEST";
+export const BOARD_UPDATE_SUCCESS = "BOARD_UPDATE_SUCCESS";
+export const BOARD_UPDATE_FAILURE = "BOARD_UPDATE_FAILURE";
+
 const initialState = {
   boardLists: [
     {
@@ -46,7 +54,13 @@ const initialState = {
   isBoardListOneLoading: false,
   isBoardListOneDone: false,
   isBoardListOneError: false,
-  boardList: null,
+  isBoardRemoveLoading: false,
+  isBoardRemoveDone: false,
+  isBoardRemoveError: false,
+  isBoardUpdateLoading: false,
+  isBoardUpdateDone: false,
+  isBoardUpdateError: false,
+  boardList: [],
 };
 
 const board = (state = initialState, action) => {
@@ -58,6 +72,7 @@ const board = (state = initialState, action) => {
         isBoardListDone: false,
         isBoardListError: false,
         isBoardWriteDone: false,
+        isBoardListRemoveDone: false,
       };
     case BOARD_LISTS_SUCCESS:
       return {
@@ -98,6 +113,7 @@ const board = (state = initialState, action) => {
         isBoardListOneLoading: true,
         isBoardListOneDone: false,
         isBoardListOneError: false,
+        isBoardListUpdateDone: false,
       };
     case BOARD_LIST_SUCCESS:
       return {
@@ -113,6 +129,49 @@ const board = (state = initialState, action) => {
         ...state,
         isBoardListOneLoading: false,
         isBoardListOneError: action.error,
+      };
+    case BOARD_REMOVE_REQUEST:
+      return {
+        ...state,
+        isBoardListRemoveLoading: true,
+        isBoardListRemoveDone: false,
+        isBoardListRemoveError: false,
+      };
+    case BOARD_REMOVE_SUCCESS:
+      return {
+        ...state,
+        isBoardListRemoveLoading: false,
+        isBoardListRemoveDone: true,
+        boardLists: state.boardLists.filter((v) => v.id !== action.payload.id),
+        boardList: [],
+      };
+    case BOARD_REMOVE_FAILURE:
+      return {
+        ...state,
+        isBoardListRemoveLoading: false,
+        isBoardListRemoveError: action.error,
+      };
+    case BOARD_UPDATE_REQUEST:
+      return {
+        ...state,
+        isBoardListUpdateLoading: true,
+        isBoardListUpdateDone: false,
+        isBoardListUpdateError: false,
+      };
+    case BOARD_UPDATE_SUCCESS:
+      const idx = state.boardLists.findIndex((v) => v.id === action.payload.id);
+      state.boardLists[idx] = action.payload;
+      return {
+        ...state,
+        isBoardListUpdateLoading: false,
+        isBoardListUpdateDone: true,
+        boardLists: [...state.boardLists],
+      };
+    case BOARD_UPDATE_FAILURE:
+      return {
+        ...state,
+        isBoardListUpdateLoading: false,
+        isBoardListUpdateError: action.error,
       };
     default:
       return state;

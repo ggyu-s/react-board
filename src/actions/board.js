@@ -4,6 +4,10 @@ import {
   BOARD_LISTS_SUCCESS,
   BOARD_LIST_FAILURE,
   BOARD_LIST_REQUEST,
+  BOARD_REMOVE_FAILURE,
+  BOARD_REMOVE_REQUEST,
+  BOARD_UPDATE_FAILURE,
+  BOARD_UPDATE_REQUEST,
   BOARD_WRITE_FAILURE,
   BOARD_WRITE_REQUEST,
 } from "../reducers/board";
@@ -33,11 +37,32 @@ export const boardWrite = (info) => async (dispatch) => {
 export const boardListItem = (id) => async (dispatch) => {
   try {
     dispatch({ type: BOARD_LIST_REQUEST });
-    console.log(id);
     setTimeout(() => {
       dispatch(id);
     }, 3000);
   } catch (err) {
     dispatch({ type: BOARD_LIST_FAILURE, error: err });
+  }
+};
+
+export const boardListRemove = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: BOARD_REMOVE_REQUEST });
+    setTimeout(() => {
+      dispatch(id);
+    }, 3000);
+  } catch (err) {
+    dispatch({ type: BOARD_REMOVE_FAILURE, error: err });
+  }
+};
+
+export const boardListUpdate = (board) => async (dispatch) => {
+  try {
+    dispatch({ type: BOARD_UPDATE_REQUEST });
+    setTimeout(() => {
+      dispatch(board);
+    }, 3000);
+  } catch (err) {
+    dispatch({ type: BOARD_UPDATE_FAILURE, error: err });
   }
 };
