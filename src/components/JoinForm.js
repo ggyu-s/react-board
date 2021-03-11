@@ -2,15 +2,18 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../actions/user";
-import { USER_JOIN_SUCCESS } from "../reducers/user";
+import { USER_JOIN_ERROR_FAILURE, USER_JOIN_SUCCESS } from "../reducers/user";
 import { useHistory } from "react-router-dom";
 
 const JoinForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { userJoinLoading, userJoinDone, isLogInUser } = useSelector(
-    (state) => state.user
-  );
+  const {
+    userJoinLoading,
+    userJoinDone,
+    isLogInUser,
+    userJoinError,
+  } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +36,11 @@ const JoinForm = () => {
     if (userJoinDone) {
       history.push("/");
     }
-  }, [userJoinDone, history, isLogInUser]);
+    if (userJoinError) {
+      alert(userJoinError);
+      dispatch({ type: USER_JOIN_ERROR_FAILURE });
+    }
+  }, [userJoinDone, history, isLogInUser, userJoinError, dispatch]);
 
   const onSubmit = useCallback(async () => {
     console.log(email, nickname, password, passwordCheck);

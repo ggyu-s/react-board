@@ -9,19 +9,26 @@ import {
   USER_LOGOUT_SUCCESS,
   VAR_INIT,
 } from "../reducers/user";
+import ApiManager from "../utils/APIManager";
+const $ = new ApiManager();
 
 export const init = () => (dispatch) => {
   dispatch({ type: VAR_INIT });
 };
 
 export const addUser = (info) => async (dispatch) => {
-  dispatch({ type: USER_JOIN_REQUEST });
   try {
-    //   const result = await axios.post();
-    setTimeout(() => {
+    dispatch({ type: USER_JOIN_REQUEST });
+    const result = await $.post("/user/join", info.payload);
+    if (result.status === 500) {
+      console.log(result);
+      dispatch({
+        type: USER_JOIN_FAILURE,
+        error: result.message.response.data,
+      });
+    } else {
       dispatch(info);
-      console.log(info);
-    }, 3000);
+    }
   } catch (err) {
     console.error(err);
     dispatch({
@@ -32,8 +39,8 @@ export const addUser = (info) => async (dispatch) => {
 };
 
 export const login = (info) => async (dispatch) => {
-  dispatch({ type: USER_LOGIN_REQUEST });
   try {
+    dispatch({ type: USER_LOGIN_REQUEST });
     setTimeout(() => dispatch(info), 3000);
   } catch (err) {
     dispatch({ type: USER_LOGIN_FAILURE, error: err });
