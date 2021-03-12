@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../actions/user";
-import { USER_JOIN_ERROR_FAILURE, USER_JOIN_SUCCESS } from "../reducers/user";
+import { USER_JOIN_ERROR_FAILURE } from "../reducers/user";
 import { useHistory } from "react-router-dom";
 
 const JoinForm = () => {
@@ -49,7 +49,6 @@ const JoinForm = () => {
     }
     dispatch(
       addUser({
-        type: USER_JOIN_SUCCESS,
         payload: { email, nickname, password },
       })
     );

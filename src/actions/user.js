@@ -2,6 +2,7 @@
 import {
   USER_JOIN_FAILURE,
   USER_JOIN_REQUEST,
+  USER_JOIN_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGOUT_FAILURE,
@@ -19,21 +20,14 @@ export const init = () => (dispatch) => {
 export const addUser = (info) => async (dispatch) => {
   try {
     dispatch({ type: USER_JOIN_REQUEST });
-    const result = await $.post("/user/join", info.payload);
-    if (result.status === 500) {
-      console.log(result);
-      dispatch({
-        type: USER_JOIN_FAILURE,
-        error: result.message.response.data,
-      });
-    } else {
-      dispatch(info);
-    }
-  } catch (err) {
-    console.error(err);
+    await $.post("/users", info.payload);
+    dispatch({
+      type: USER_JOIN_SUCCESS,
+    });
+  } catch (error) {
     dispatch({
       type: USER_JOIN_FAILURE,
-      error: err,
+      error: error.message.response.data.data,
     });
   }
 };
@@ -41,9 +35,13 @@ export const addUser = (info) => async (dispatch) => {
 export const login = (info) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
-    setTimeout(() => dispatch(info), 3000);
-  } catch (err) {
-    dispatch({ type: USER_LOGIN_FAILURE, error: err });
+    await $.post("/users/login", info.payload);
+    dispatch(info);
+  } catch (error) {
+    dispatch({
+      type: USER_LOGIN_FAILURE,
+      error: error.message.response.data.data,
+    });
   }
 };
 

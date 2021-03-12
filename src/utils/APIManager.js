@@ -65,14 +65,13 @@ export default class ApiManager {
         ...(body && { data: body }),
         headers,
       });
-      console.log(response);
-      return response;
       //   const responseJson = await response.json();
-      //   return
-    } catch (err) {
-      return {
-        status: 500,
-        message: err,
+      //   return responseJson;
+      return response;
+    } catch (error) {
+      throw {
+        code: 500,
+        message: error,
       };
     }
   };
