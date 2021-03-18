@@ -8,7 +8,9 @@ import { useHistory } from "react-router-dom";
 const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isLogInLoading, isLogInDone } = useSelector((state) => state.user);
+  const { isLogInLoading, isLogInDone, isLogInError } = useSelector(
+    (state) => state.user
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -35,6 +37,13 @@ const LoginForm = () => {
       history.push("/");
     }
   }, [isLogInDone, history]);
+
+  useEffect(() => {
+    if (isLogInError) {
+      alert(isLogInError);
+    }
+  }, [isLogInError]);
+
   return (
     <>
       <Form onFinish={onSubmit}>

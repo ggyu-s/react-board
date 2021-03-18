@@ -45,8 +45,8 @@ export default class ApiManager {
         url: `${HOST_URL}${url}${queryString}`,
         headers,
       });
-      const responeseJson = await response.json();
-      return responeseJson;
+      // const responeseJson = await response.json();
+      return response;
     } catch (err) {
       return {
         code: 500,
@@ -67,6 +67,7 @@ export default class ApiManager {
       });
       //   const responseJson = await response.json();
       //   return responseJson;
+      console.log(response);
       return response;
     } catch (error) {
       throw {

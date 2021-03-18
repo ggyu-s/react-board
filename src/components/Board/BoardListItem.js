@@ -18,10 +18,10 @@ const BoardListItem = ({ boardList }) => {
         <Link to={`/board/${boardList.id}`}>{boardList.subject}</Link>
       </Col>
       <Col span={5} style={{ textAlign: "center" }}>
-        {boardList.nickname}
+        {boardList.writer}
       </Col>
       <Col span={4} style={{ textAlign: "center" }}>
-        {boardList.date}
+        {boardList.createdAt}
       </Col>
       <Col span={4} style={{ textAlign: "center" }}>
         {boardList.count}

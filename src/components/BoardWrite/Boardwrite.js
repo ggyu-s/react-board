@@ -25,20 +25,18 @@ function Boardwrite() {
   }, []);
 
   const onWriteBtn = useCallback(() => {
+    console.log(isLogInUser);
     dispatch(
       boardWrite({
         type: BOARD_WRITE_SUCCESS,
         payload: {
-          id: 4,
-          nickname: "j",
+          writer: isLogInUser.nickname,
           subject,
           content,
-          count: 0,
-          date: "2021-03-09",
         },
       })
     );
-  }, [dispatch, subject, content]);
+  }, [isLogInUser, dispatch, subject, content]);
 
   const onCancle = useCallback(() => {
     history.push("/board");

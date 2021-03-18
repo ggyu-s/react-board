@@ -2,7 +2,8 @@ import React, { useCallback, useEffect } from "react";
 import { Menu, Layout } from "antd";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../actions/user";
+import { logout, userCheck } from "../actions/user";
+import axios from "axios";
 
 const { Header } = Layout;
 
@@ -23,6 +24,10 @@ const Nav = () => {
       movePage("/");
     }
   });
+
+  useEffect(() => {
+    dispatch(userCheck());
+  }, [dispatch]);
 
   return (
     <>

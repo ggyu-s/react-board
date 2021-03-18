@@ -19,32 +19,7 @@ export const BOARD_UPDATE_SUCCESS = "BOARD_UPDATE_SUCCESS";
 export const BOARD_UPDATE_FAILURE = "BOARD_UPDATE_FAILURE";
 
 const initialState = {
-  boardLists: [
-    {
-      id: 1,
-      nickname: "ggyu",
-      subject: "test",
-      content: "testcontent",
-      count: 0,
-      date: "2021-02-26",
-    },
-    {
-      id: 2,
-      nickname: "ggyu",
-      subject: "test2",
-      content: "testcontent",
-      count: 0,
-      date: "2021-02-26",
-    },
-    {
-      id: 3,
-      nickname: "ggyu",
-      subject: "test3",
-      content: "testcontent",
-      count: 2,
-      date: "2021-02-26",
-    },
-  ],
+  boardLists: [],
   isBoardListLoading: false,
   isBoardListDone: false,
   isBoardListError: false,
@@ -75,11 +50,12 @@ const board = (state = initialState, action) => {
         isBoardListRemoveDone: false,
       };
     case BOARD_LISTS_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         isBoardListLoading: false,
         isBoardListDone: true,
-        boardLists: [...state.boardLists],
+        boardLists: [...action.payload],
       };
     case BOARD_LISTS_FAILURE:
       return {

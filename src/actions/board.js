@@ -11,13 +11,15 @@ import {
   BOARD_WRITE_FAILURE,
   BOARD_WRITE_REQUEST,
 } from "../reducers/board";
+import ApiManager from "../utils/APIManager";
+const $ = new ApiManager();
 
 export const boardLists = () => async (dispatch) => {
   try {
     dispatch({ type: BOARD_LISTS_REQUEST });
-    setTimeout(() => {
-      dispatch({ type: BOARD_LISTS_SUCCESS });
-    }, 2000);
+    const result = await $.get("/board");
+    console.log(result);
+    dispatch({ type: BOARD_LISTS_SUCCESS, payload: result.data.data });
   } catch (err) {
     dispatch({ type: BOARD_LISTS_FAILURE, error: err });
   }
@@ -26,9 +28,8 @@ export const boardLists = () => async (dispatch) => {
 export const boardWrite = (info) => async (dispatch) => {
   try {
     dispatch({ type: BOARD_WRITE_REQUEST });
-    setTimeout(() => {
-      dispatch(info);
-    }, 3000);
+    await $.post("/board/write", info.payload);
+    dispatch(info);
   } catch (err) {
     dispatch({ type: BOARD_WRITE_FAILURE, error: err });
   }
