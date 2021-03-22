@@ -67,7 +67,6 @@ export default class ApiManager {
       });
       //   const responseJson = await response.json();
       //   return responseJson;
-      console.log(response);
       return response;
     } catch (error) {
       throw {

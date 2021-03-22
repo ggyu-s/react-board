@@ -76,7 +76,6 @@ export const userCheck = () => async (dispatch) => {
     // axios.defaults.headers.common[
     //   "Authorization"
     // ] = `Bearer ${result.data.result.token}`;
-    console.log(result);
     dispatch({ type: USER_LOGIN_SUCCESS, payload: result.data.data });
   } catch (err) {
     dispatch({

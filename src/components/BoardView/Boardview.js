@@ -14,15 +14,12 @@ function Boardview({ match }) {
     isBoardListRemoveLoading,
     isBoardListRemoveDone,
   } = useSelector((state) => state.board);
-  const [getBoard, setGetBoard] = useState(boardList);
+  const { isLogInUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(
       boardListItem({
-        type: BOARD_LIST_SUCCESS,
-        payload: {
-          id: Number(match.params.id),
-        },
+        id: Number(match.params.id),
       })
     );
   }, [dispatch, match.params.id]);
@@ -50,27 +47,32 @@ function Boardview({ match }) {
   const onClickUpdate = useCallback(() => {
     history.push(`/boardupdate/${match.params.id}`);
   }, [history, match.params.id]);
+
   return (
     <div>
       {isBoardListOneLoading ? (
         <div>loading...</div>
       ) : (
-        boardList.map((v) => (
-          <div key={v.id}>
-            <div>{v.id}</div>
-            <div>{v.nickname}</div>
-            <div>{v.subject}</div>
-            <div>{v.content}</div>
-            <div>{v.date}</div>
-            <Button onClick={onClickUpdate}>수정</Button>
-            <Button
-              onClick={() => onClickRemove(v.id)}
-              loading={isBoardListRemoveLoading}
-            >
-              삭제
-            </Button>
+        boardList && (
+          <div key={boardList.id}>
+            <div>{boardList.id}</div>
+            <div>{boardList.writer}</div>
+            <div>{boardList.subject}</div>
+            <div>{boardList.content}</div>
+            <div>{boardList.createdAt}</div>
+            {isLogInUser && boardList.user === isLogInUser.id ? (
+              <>
+                <Button onClick={onClickUpdate}>수정</Button>
+                <Button
+                  onClick={() => onClickRemove(boardList.id)}
+                  loading={isBoardListRemoveLoading}
+                >
+                  삭제
+                </Button>
+              </>
+            ) : null}
           </div>
-        ))
+        )
       )}
     </div>
   );

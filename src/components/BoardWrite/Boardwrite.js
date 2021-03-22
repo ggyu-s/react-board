@@ -33,6 +33,7 @@ function Boardwrite() {
           writer: isLogInUser.nickname,
           subject,
           content,
+          userId: isLogInUser.id,
         },
       })
     );

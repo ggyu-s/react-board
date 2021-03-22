@@ -96,9 +96,7 @@ const board = (state = initialState, action) => {
         ...state,
         isBoardListOneLoading: false,
         isBoardListOneDone: true,
-        boardList: state.boardLists.filter(
-          (v) => v.id === Number(action.payload.id)
-        ),
+        boardList: action.payload,
       };
     case BOARD_LIST_FAILURE:
       return {
@@ -118,7 +116,6 @@ const board = (state = initialState, action) => {
         ...state,
         isBoardListRemoveLoading: false,
         isBoardListRemoveDone: true,
-        boardLists: state.boardLists.filter((v) => v.id !== action.payload.id),
         boardList: [],
       };
     case BOARD_REMOVE_FAILURE:
@@ -135,13 +132,11 @@ const board = (state = initialState, action) => {
         isBoardListUpdateError: false,
       };
     case BOARD_UPDATE_SUCCESS:
-      const idx = state.boardLists.findIndex((v) => v.id === action.payload.id);
-      state.boardLists[idx] = action.payload;
       return {
         ...state,
         isBoardListUpdateLoading: false,
         isBoardListUpdateDone: true,
-        boardLists: [...state.boardLists],
+        boardLists: [],
       };
     case BOARD_UPDATE_FAILURE:
       return {
