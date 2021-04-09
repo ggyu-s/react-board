@@ -50,7 +50,6 @@ const board = (state = initialState, action) => {
         isBoardListRemoveDone: false,
       };
     case BOARD_LISTS_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         isBoardListLoading: false,
